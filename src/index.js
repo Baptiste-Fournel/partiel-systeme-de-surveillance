@@ -1,4 +1,9 @@
 import NotificationFactory from "../notifications/NotificationsFactory.js";
+import CameraA from "../sensor/CameraA.js";
+import ThermalSensorB from "../sensor/ThermalSensorB.js";
+import Room from "../room/Room.js";
+import TemperatureSensorA from "../sensor/TemperatureSensorA.js";
+import ThermalSensorBAdaptater from "../sensor/adaptater/ThermalSensorBAdaptater.js";
 
 const notificationConfigs = [
     {
@@ -15,6 +20,10 @@ const notificationConfigs = [
     }
 ]
 
-const notifiers = NotificationFactory.createMany(notificationConfigs)
+const room = new Room("Efficom", NotificationFactory.createMany(notificationConfigs))
 
-notifiers.forEach((notifier) => notifier.notify("Test factory"))
+room.addSensor(new CameraA("Efficom"))
+room.addSensor(new ThermalSensorBAdaptater(new ThermalSensorB("Salle 304")))
+room.addSensor(new TemperatureSensorA("Efficom", 28))
+
+room.monitor()

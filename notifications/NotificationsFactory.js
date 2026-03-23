@@ -1,6 +1,6 @@
-import EmailNotifier from "./EmailNotifier";
-import LogNotifier from "./LogNotifier";
-import DiscordNotifier from "./DiscordNotifier";
+import EmailNotifier from "./EmailNotifier.js";
+import LogNotifier from "./LogNotifier.js";
+import DiscordNotifier from "./DiscordNotifier.js";
 
 export default class Notifications {
     static create(notificationConfig) {
