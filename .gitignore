@@ -1,0 +1,8 @@
+.vscode/
+.idea/
+*.swp
+*.log
+.cache/
+coverage/
+build/
+dist/
