@@ -5,22 +5,35 @@ import Room from "../room/Room.js";
 import TemperatureSensorA from "../sensor/TemperatureSensorA.js";
 import ThermalSensorBAdaptater from "../sensor/adaptater/ThermalSensorBAdaptater.js";
 
-const notificationConfigs = [
+const lobbyNotifiers = NotificationFactory.createMany([
     {
-        type: "email",
-        email: "onEstLa@tqt.com"
+        type: "email", email: "onEstLa@tqt.com"
     },
     {
-        type: "log",
-        fileName: "tqt.log"
-    },
-    {
-        type: "discord",
-        channel: "ouai ouai"
+        type: "log", fileName: "lobby.log"
     }
-]
+])
 
-const room = new Room("Efficom", NotificationFactory.createMany(notificationConfigs))
+const serverRoomNotifiers = NotificationFactory.createMany([
+    {
+        type: "discord", channel: "ouai ouai"
+    }
+])
+
+const lobby = new Room("Efficom", lobbyNotifiers)
+const serverRoom = new Room("Server Room", serverRoomNotifiers)
+
+lobby.addSensor(new CameraA("Efficom"))
+lobby.addSensor(new ThermalSensorBAdaptater(new ThermalSensorB("Salle 305")))
+serverRoom.addSensor(new TemperatureSensorA("Efficom", 30))
+
+console.log("Lobby")
+lobby.monitor()
+
+console.log("Server Room")
+serverRoom.monitor()
+
+const room = new Room("Efficom", lobbyNotifiers)
 
 room.addSensor(new CameraA("Efficom"))
 room.addSensor(new ThermalSensorBAdaptater(new ThermalSensorB("Salle 304")))
